@@ -32,7 +32,7 @@ def dhash(image, hashSize=8):
 def video_feed():
     imageQ = request.args.get('image')
     imageUrl = 'https://dwjz5q0kg4677.cloudfront.net/'
-    imageUrl+=+imageQ
+    imageUrl+=imageQ
     ssl._create_default_https_context = ssl._create_unverified_context
     urllib.request.urlretrieve(
          imageUrl   ,
