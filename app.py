@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from flask import Flask, render_template, Response
+from flask import Flask, render_template, Response,request
 import io
 import cv2
 import urllib.request
@@ -30,16 +30,16 @@ def dhash(image, hashSize=8):
 
 @app.route('/video_feed')
 def video_feed():
-    
+    imageQ = request.args.get('image')
+    imageUrl = 'https://dwjz5q0kg4677.cloudfront.net/'+imageQ
     ssl._create_default_https_context = ssl._create_unverified_context
     urllib.request.urlretrieve(
-        'https://cdn.hashnode.com/res/hashnode/image/upload/v1600097347472/FaJTB7UrN.jpeg',
+         imageUrl   ,
         "gfg")
 
     image = cv2.imread("gfg")
-
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-
+    cv2.imshow('image',image)
     cv2.waitKey(0)
 
     imageHash = dhash(image)
