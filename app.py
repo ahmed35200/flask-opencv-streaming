@@ -44,7 +44,7 @@ def video_feed():
 
     imageHash = dhash(image)
     print(imageHash)
-    return "dsf"
+    return str(imageHash)
 
 
 if __name__ == '__main__':
