@@ -31,7 +31,8 @@ def dhash(image, hashSize=8):
 @app.route('/video_feed')
 def video_feed():
     imageQ = request.args.get('image')
-    imageUrl = 'https://dwjz5q0kg4677.cloudfront.net/'+imageQ
+    imageUrl = 'https://dwjz5q0kg4677.cloudfront.net/'
+    imageUrl+=+imageQ
     ssl._create_default_https_context = ssl._create_unverified_context
     urllib.request.urlretrieve(
          imageUrl   ,
@@ -39,7 +40,6 @@ def video_feed():
 
     image = cv2.imread("gfg")
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    cv2.imshow('image',image)
     cv2.waitKey(0)
 
     imageHash = dhash(image)
