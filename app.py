@@ -2,6 +2,7 @@
 from flask import Flask, render_template, Response
 import io
 import cv2
+import urllib.request
 
 app = Flask(__name__)
 vc = cv2.VideoCapture(-1)
@@ -13,23 +14,23 @@ def index():
     return render_template('index.html')
 
 
-def gen():
-    """Video streaming generator function."""
-    while True:
-        read_return_code, frame = vc.read()
-        encode_return_code, image_buffer = cv2.imencode('.jpg', frame)
-        io_buf = io.BytesIO(image_buffer)
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + io_buf.read() + b'\r\n')
+def dhash(image, hashSize=8):
+	# resize the input image, adding a single column (width) so we
+	# can compute the horizontal gradient
+	resized = cv2.resize(image, (hashSize + 1, hashSize))
+
+	# compute the (relative) horizontal gradient between adjacent
+	# column pixels
+	diff = resized[:, 1:] > resized[:, :-1]
+
+	# convert the difference image to a hash
+	return sum([2 ** i for (i, v) in enumerate(diff.flatten()) if v])
+
 
 
 @app.route('/video_feed')
 def video_feed():
-    """Video streaming route. Put this in the src attribute of an img tag."""
-    return Response(
-        gen(),
-        mimetype='multipart/x-mixed-replace; boundary=frame'
-    )
+    return "dsf"
 
 
 if __name__ == '__main__':
