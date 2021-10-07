@@ -3,7 +3,7 @@ from flask import Flask, render_template, Response
 import io
 import cv2
 import urllib.request
-
+import ssl
 app = Flask(__name__)
 vc = cv2.VideoCapture(-1)
 
@@ -30,6 +30,20 @@ def dhash(image, hashSize=8):
 
 @app.route('/video_feed')
 def video_feed():
+    
+    ssl._create_default_https_context = ssl._create_unverified_context
+    urllib.request.urlretrieve(
+        'https://cdn.hashnode.com/res/hashnode/image/upload/v1600097347472/FaJTB7UrN.jpeg',
+        "gfg")
+
+    image = cv2.imread("gfg")
+
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+    cv2.waitKey(0)
+
+    imageHash = dhash(image)
+    print(imageHash)
     return "dsf"
 
 
