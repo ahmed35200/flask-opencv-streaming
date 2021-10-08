@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from flask import Flask, render_template, Response,request
+from flask import Flask, render_template, Response,request,jsonify 
 import io
 import cv2
 import urllib.request
@@ -45,7 +45,7 @@ def video_feed():
     imageHash = dhash(image)
     print(imageHash)
     newSTr = str(imageHash)
-    return flask.jsonify(hash=newSTr)
+    return jsonify(hash=newSTr)
 
 
 if __name__ == '__main__':
