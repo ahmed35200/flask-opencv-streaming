@@ -44,7 +44,8 @@ def video_feed():
 
     imageHash = dhash(image)
     print(imageHash)
-    return str(imageHash)
+    newSTr = str(imageHash)
+    return flask.jsonify(hash=newSTr)
 
 
 if __name__ == '__main__':
